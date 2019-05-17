@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <title>景区监控页面</title>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;"/>
+    <link rel="stylesheet" type="text/css" href="./css/iview.css">
+    <script src="./js/httpVueLoader.js"></script>
+    <script type="text/javascript" src="./js/vue.min.js"></script>
+    <script type="text/javascript" src="./js/iview.min.js"></script>
+    <script src="./js/axios.min.js"></script>
+    </head>
+    <body>
+        <div id="app">
+            <m-container></m-container>
+        </div>
+        <script>
+            new Vue({
+                el: '#app',
+                data: {},
+                components: {
+                    'mContainer': httpVueLoader('./components/main.vue')
+                },
+                methods: {}
+            });
+        </script>
+    </body>
+</html>
