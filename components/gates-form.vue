@@ -23,7 +23,7 @@
                             :label-width="90"
                             :rules="[{required: true, message: '请填写闸机编号', trigger: 'blur'}, {pattern: /^[0-9]*$/, message: '请填写数字', trigger: 'blur'}]"
                         >
-                            <i-input v-model="item.gateNo" placeholder="闸机编号" :clearable="true"></i-input>
+                            <i-input size="large" v-model="item.gateNo" placeholder="闸机编号" :clearable="true"></i-input>
                         </form-item>
                         <form-item
                             label="闸机IP"
@@ -31,16 +31,8 @@
                             :label-width="90"
                             :rules="[{required: true, message: '请填写闸机IP', trigger: 'blur'}, {pattern: /^(1\d{2}|2[0-4]\d|25[0-5]|[1-9]\d|[1-9])(\.(1\d{2}|2[0-4]\d|25[0-5]|[1-9]\d|\d)){3}$/, message: '请填写正确的IP', trigger: 'blur'}]"
                         >
-                            <i-input v-model="item.gateip" placeholder="闸机IP" :clearable="true"></i-input>
+                            <i-input size="large" v-model="item.gateip" placeholder="闸机IP" :clearable="true"></i-input>
                         </form-item>
-                        <!-- <div class="item-input">
-                            <label>闸机编号：</label>
-                            <input-number v-model="item.gateNo" placeholder="闸机编号" min="0" style="width:100%"></input-number>
-                        </div>
-                        <div class="item-input">
-                            <label>闸机IP：</label>
-                            <i-input v-model="item.gateip" style="width: auto"></i-input>
-                        </div>-->
                     </Card>
                     <Card class="gateItem addItem">
                         <div class="addBox" @click="addGate">
@@ -149,9 +141,15 @@ module.exports = {
     padding: 20px;
 }
 .gateItem {
-    width: 280px;
+    width: 320px;
     margin: 0 5px 10px;
-    padding: 10px 0;
+    padding: 10px 0; 
+}
+.gateItem .ivu-form-item {
+    margin-bottom: 20px;
+}
+.gateItem .ivu-form-item:last-child {
+    margin-bottom: 0;
 }
 .item-input {
     margin-bottom: 10px;
@@ -187,10 +185,10 @@ module.exports = {
     display: block;
     flex-direction: column;
     border-radius: 50%;
-    width: 60px;
-    height: 60px;
-    padding-top: 18px;
-    background-color: #eee;
+    width: 78px;
+    height: 78px;
+    padding-top: 25px;
+    background-color: #f5f5f5;
     text-align: center;
     line-height: 60px;
     color: #3476f1;
@@ -207,5 +205,6 @@ module.exports = {
     font-size: 12px;
     cursor: pointer;
     margin-bottom: 2px;
+    font-weight: bold;
 }
 </style>

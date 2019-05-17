@@ -52,7 +52,7 @@ module.exports = {
                             [
                                 h("Icon", {
                                     attrs: {
-                                        type: "ios-trash-outline"
+                                        custom: 'iconfont iconshanchu'
                                     }
                                 })
                             ]

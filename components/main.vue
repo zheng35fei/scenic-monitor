@@ -3,14 +3,14 @@
         <layout>
             <header style="height:40px"></header>
             <content style="width: 70%; margin: 0 auto;">
-                <Row type="flex" justify="space-between">
+                <Row type="flex" justify="space-between" align="middle">
                     <i-col span="16">
-                        <h3
-                            v-if="!isEdit && scenicTitleName"
-                            style="font-size:24px; font-weight: 400; display:inline-block;"
-                            @click="nameEdit"
-                        >{{scenicTitleName}}</h3>
-                        <Row v-else :gutter="4">
+                        <Row type="flex" align="middle" v-if="!isEdit && scenicTitleName">
+                            <i-col>
+                                <h3 class="scenicTitle" @click="nameEdit">{{scenicTitleName}}</h3>
+                            </i-col>
+                        </Row>
+                        <Row type="flex" align="middle" v-else :gutter="4">
                             <i-col span="16">
                                 <i-input
                                     ref="scenicTitle"
@@ -34,6 +34,7 @@
                         <Row type="flex" justify="end">
                             <i-col>
                                 <i-button
+                                    class="headBtn"
                                     v-if="!isEdit && scenicTitleName"
                                     size="large"
                                     type="primary"
@@ -41,6 +42,7 @@
                                     @click="nameEdit"
                                 >编辑</i-button>
                                 <i-button
+                                    class="headBtn"
                                     v-else
                                     size="large"
                                     type="primary"
@@ -48,12 +50,14 @@
                                     @click="saveScenicName"
                                 >保存</i-button>
                                 <i-button
+                                    class="headBtn"
                                     size="large"
                                     icon="ios-add"
                                     type="primary"
                                     ghost
                                     @click="modalForm = true"
                                     :disabled="!nameSaved"
+                                    style="padding: 10px 26px; margin-left: 6px;"
                                 >添加</i-button>
                             </i-col>
                         </Row>
@@ -74,24 +78,48 @@
             <footer></footer>
         </layout>
 
-        <Modal ref="addModal" v-model="modalForm" :width="modalWidth" :closable="false" footer-hide scrollable :fullscreen="isFullscreen">
+        <Modal
+            ref="addModal"
+            v-model="modalForm"
+            :width="modalWidth"
+            :closable="false"
+            footer-hide
+            scrollable
+            :fullscreen="isFullscreen"
+        >
             <template slot="header">
                 <header class="modalTitle">
                     <template v-if="!isGate">{{modelTitleName}}</template>
                     <template v-else>
                         <row type="flex" justify="space-between" style="margin:0 24px">
-                            <i-col span="16" style="text-align: left; display:flex; align-items:center;">
+                            <i-col
+                                span="16"
+                                style="text-align: left; display:flex; align-items:center;"
+                            >
                                 <h3 class="titleName">闸机监控项</h3>
-                                <Icon type="ios-expand" @click="isFullscreen = !isFullscreen" style="margin-left:8px; cursor: pointer"/>
+                                <Icon
+                                    type="ios-expand"
+                                    @click="isFullscreen = !isFullscreen"
+                                    style="margin-left:8px; cursor: pointer"
+                                />
                             </i-col>
                             <i-col span="8" style="text-align: right">
-                                <i-button type="primary" @click="submitGateList" :loading="btnLoading">保存提交</i-button>
+                                <i-button
+                                    type="primary"
+                                    @click="submitGateList"
+                                    :loading="btnLoading"
+                                >保存提交</i-button>
                             </i-col>
                         </row>
                     </template>
                 </header>
             </template>
-            <component ref="addForm" :is="currentFormComponent" @close-dialog="closeModal" @save-finish="saveDone"></component>
+            <component
+                ref="addForm"
+                :is="currentFormComponent"
+                @close-dialog="closeModal"
+                @save-finish="saveDone"
+            ></component>
         </Modal>
     </div>
 </template>
@@ -108,7 +136,7 @@ module.exports = {
     },
     data() {
         return {
-            curTabName: 'database',
+            curTabName: "database",
             modalForm: false,
             scenicTitleName: "景区名称",
             scenicTempName: "",
@@ -116,19 +144,19 @@ module.exports = {
             tabNames: [
                 {
                     name: "database",
-                    icon: "ios-list-box-outline",
+                    icon: 'iconfont iconshujuk',
                     label: "数据库监控",
                     tableComponent: "databaseTable"
                 },
                 {
                     name: "ports",
-                    icon: "ios-qr-scanner",
+                    icon: "iconfont iconshujukuduankou",
                     label: "端口监控",
                     tableComponent: "portsTable"
                 },
                 {
                     name: "gates",
-                    icon: "ios-barcode-outline",
+                    icon: "iconfont iconzj",
                     label: "闸机监控",
                     tableComponent: "gatesTable"
                 }
@@ -140,10 +168,10 @@ module.exports = {
         };
     },
     created() {
-        this.nameSaved = !!this.scenicTitleName
+        this.nameSaved = !!this.scenicTitleName;
     },
     watch: {
-        'curTabName'() {
+        curTabName() {
             this.getCurTabList();
         }
     },
@@ -159,7 +187,8 @@ module.exports = {
                         return h("div", [
                             h("Icon", {
                                 attrs: {
-                                    type: item.icon
+                                    // type: item.icon
+                                    custom: item.icon
                                 }
                             }),
                             h("p", item.label)
@@ -171,7 +200,7 @@ module.exports = {
         },
         // 弹出框宽度
         modalWidth() {
-            return this.currentFormComponent === "gatesForm" ? 960 : 420;
+            return this.currentFormComponent === "gatesForm" ? 1068 : 420;
         },
         modelTitleName() {
             return (
@@ -190,7 +219,7 @@ module.exports = {
     methods: {
         // 查询当前tab的列表
         getCurTabList() {
-            this.$refs[this.curTabName+ 'Table'][0].getList()
+            this.$refs[this.curTabName + "Table"][0].getList();
         },
         // 组件内部关闭弹层
         closeModal() {
@@ -199,7 +228,7 @@ module.exports = {
         // 修改当前添加form组件
         selectTab(name) {
             this.currentFormComponent = name + "Form";
-            this.curTabName = name
+            this.curTabName = name;
         },
         // 展开名称编辑
         nameEdit() {
@@ -239,20 +268,21 @@ module.exports = {
                 .then(res => {
                     this.isEdit = false;
                     this.scenicTitleName = this.scenicTempName;
-                    this.nameSaved = true
+                    this.nameSaved = true;
                 })
                 .catch(err => {
                     this.$Notice.error({
                         title: "失败",
                         desc: err
                     });
-                    this.scenicTitleName = this.scenicTempName || this.scenicTitleName;
+                    this.scenicTitleName =
+                        this.scenicTempName || this.scenicTitleName;
                 });
         },
         // 提交闸机列表
         submitGateList() {
             this.btnLoading = true;
-            this.$refs.addForm.submitForm()
+            this.$refs.addForm.submitForm();
         },
         // 组件内部保存完毕
         saveDone() {
@@ -264,6 +294,10 @@ module.exports = {
 </script>
 
 <style>
+.headBtn {
+    font-size: 12px;
+    padding: 10px 36px;
+}
 .ivu-layout {
     background-color: #fff;
 }
@@ -280,13 +314,14 @@ module.exports = {
     width: 100%;
 }
 .ivu-tabs.ivu-tabs-card > .ivu-tabs-bar .ivu-tabs-tab {
-    flex: 1;
+    flex-basis: 33%;
     height: auto;
     border: none;
     border-radius: 0;
     background-color: #f6f6f6;
     text-align: center;
     padding: 25px 16px;
+    margin-right: 0;
 }
 .ivu-tabs.ivu-tabs-card > .ivu-tabs-bar .ivu-tabs-tab-active {
     background-color: #3476f1;
@@ -301,6 +336,15 @@ module.exports = {
 .ivu-tabs.ivu-tabs-card > .ivu-tabs-bar .ivu-tabs-tab p {
     margin-top: 4px;
 }
+.ivu-table td, .ivu-table th {
+    border-bottom: 0;
+}
+.ivu-table-wrapper {
+    border: none;
+}
+.ivu-table:before, .ivu-table:after {
+    background-color: transparent;
+}
 .modalTitle {
     padding: 4px 0;
     font-weight: bold;
@@ -309,7 +353,18 @@ module.exports = {
     color: #333;
 }
 .titleName {
-    height:32px;
+    height: 32px;
     line-height: 32px;
+}
+.scenicTitle {
+    font-size: 30px;
+    font-weight: 400;
+    display: inline-block;
+}
+.ivu-table th {
+    background: #fff;
+    border-bottom: 1px solid #ececec;
+    height: 42px;
+    line-height: 42px;
 }
 </style>
